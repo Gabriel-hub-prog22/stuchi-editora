@@ -4,117 +4,410 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Stuchi Editora | Formamos novos autores</title>
+  <meta name="description" content="A Stuchi Editora forma novos autores. Do original à publicação, com acompanhamento editorial profissional." />
+  <meta name="theme-color" content="#0b0b0d" />
 
-  
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-
-<header class="header">
-  <div class="container header-container">
-    <img src="assets/img/logo.png" alt="Stuchi Editora" class="logo">
-
-    <button class="menu-btn" id="menuBtn">☰</button>
-
-    <nav class="nav" id="navMenu">
-      <a href="#inicio">Início</a>
-      <a href="#lancamentos">Lançamentos</a>
-      <a href="#status">Status</a>
-      <a href="#portugal">Portugal</a>
-      <a href="#contato" class="btn-outline nav-cta">Contato</a>
-    </nav>
+  <!-- Progress bar -->
+  <div class="progress" aria-hidden="true">
+    <div class="progress__bar" id="progressBar"></div>
   </div>
-</header>
 
-<section id="inicio" class="hero">
-  <div class="container hero-content">
-    <h1>Formamos novos autores.</h1>
-    <p>Da ideia ao livro publicado. A Stuchi Editora acompanha você em cada etapa.</p>
-    <div class="hero-buttons">
-      <a href="#contato" class="btn">Enviar original</a>
-      <a href="#lancamentos" class="btn-outline">Ver lançamentos</a>
+  <header class="header" id="top">
+    <div class="container header__inner">
+      <a class="brand" href="#inicio" aria-label="Ir para o início">
+        <img src="assets/img/logo.png" alt="Stuchi Editora" class="brand__logo">
+      </a>
+
+      <button class="menu-btn" id="menuBtn" aria-label="Abrir menu" aria-expanded="false" aria-controls="navMenu">
+        <span class="menu-btn__icon" aria-hidden="true"></span>
+      </button>
+
+      <nav class="nav" id="navMenu">
+        <a href="#inicio" class="nav__link">Início</a>
+        <a href="#publicar" class="nav__link">Publique Conosco</a>
+        <a href="#lancamentos" class="nav__link">Lançamentos</a>
+        <a href="#status" class="nav__link">Status</a>
+        <a href="#portugal" class="nav__link">Portugal</a>
+        <a href="#contato" class="btn btn--outline nav__cta">Contato</a>
+      </nav>
     </div>
-  </div>
-</section>
+  </header>
 
-<section class="about">
-  <div class="container about-content">
-    <h2>Uma editora para novos autores</h2>
-    <p>
-      A Stuchi Editora nasce com a missão de descobrir, orientar e formar novos autores.
-      Trabalhamos com acompanhamento editorial, desenvolvimento de obras e publicação profissional.
-    </p>
-  </div>
-</section>
+  <main>
+    <!-- HERO -->
+    <section id="inicio" class="hero">
+      <div class="hero__bg" aria-hidden="true"></div>
 
-<section id="lancamentos" class="lancamentos">
-  <div class="container">
-    <h2>Lançamentos</h2>
-    <div class="grid-books">
-      <div class="book-card"></div>
-      <div class="book-card"></div>
-      <div class="book-card"></div>
-      <div class="book-card"></div>
-    </div>
-    <p class="placeholder-text">Em breve, catálogo completo da Stuchi Editora.</p>
-  </div>
-</section>
+      <div class="container hero__grid">
+        <div class="hero__copy reveal">
+          <div class="pill">Para novos autores • Acompanhamento editorial</div>
 
-<section id="status" class="status">
-  <div class="container status-grid">
-    <div>
-      <h2>Status da editora</h2>
-      <p>Acompanhe nosso momento atual, projetos em desenvolvimento e próximos lançamentos.</p>
-    </div>
-    <div class="status-cards">
-      <div class="status-card">
-        <h3>📚 Projetos em andamento</h3>
-        <p>Originais em avaliação e obras em desenvolvimento editorial.</p>
+          <h1 class="hero__title">
+            Formamos novos autores.
+            <span class="hero__title-accent">Do original à publicação.</span>
+          </h1>
+
+          <p class="hero__subtitle">
+            Uma editora com olhar editorial e orientação profissional para transformar sua obra em livro pronto para o mundo.
+          </p>
+
+          <div class="hero__actions">
+            <a href="#publicar" class="btn btn--solid">Enviar original</a>
+            <a href="#lancamentos" class="btn btn--outline">Ver lançamentos</a>
+          </div>
+
+          <div class="hero__metrics">
+            <div class="metric">
+              <div class="metric__num">+X</div>
+              <div class="metric__label">Projetos editoriais</div>
+            </div>
+            <div class="metric">
+              <div class="metric__num">Brasil</div>
+              <div class="metric__label">Atendimento nacional</div>
+            </div>
+            <div class="metric">
+              <div class="metric__num">Portugal</div>
+              <div class="metric__label">Expansão internacional</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero__frame reveal">
+          <div class="frame">
+            <div class="frame__top">
+              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            </div>
+            <div class="frame__body">
+              <p class="frame__kicker">Como funciona</p>
+              <ol class="steps">
+                <li><strong>Envie seu original</strong><span>Avaliação inicial da proposta</span></li>
+                <li><strong>Plano editorial</strong><span>Revisão, preparação e orientação</span></li>
+                <li><strong>Projeto gráfico</strong><span>Capa + diagramação profissional</span></li>
+                <li><strong>Publicação</strong><span>Lançamento e divulgação</span></li>
+              </ol>
+              <a class="frame__link" href="#publicar">Quero publicar →</a>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="status-card">
-        <h3>✍️ Formação de autores</h3>
-        <p>Acompanhamento criativo e orientação profissional.</p>
+    </section>
+
+    <!-- ABOUT / MISSION -->
+    <section class="section section--alt">
+      <div class="container">
+        <div class="section__head reveal">
+          <h2 class="section__title">Uma editora para novos autores</h2>
+          <p class="section__subtitle">
+            Nossa missão é formar autores, desenvolver obras e publicar com qualidade editorial.
+          </p>
+        </div>
+
+        <div class="grid grid--3">
+          <article class="card reveal">
+            <h3 class="card__title">Acompanhamento</h3>
+            <p class="card__text">Orientação em cada etapa: do texto ao livro final, com clareza e profissionalismo.</p>
+          </article>
+          <article class="card reveal">
+            <h3 class="card__title">Qualidade editorial</h3>
+            <p class="card__text">Processos de preparação, revisão e leitura crítica com padrão de editora.</p>
+          </article>
+          <article class="card reveal">
+            <h3 class="card__title">Identidade visual</h3>
+            <p class="card__text">Capa e diagramação com estética premium, respeitando o estilo da obra.</p>
+          </article>
+        </div>
       </div>
-      <div class="status-card">
-        <h3>🚀 Expansão</h3>
-        <p>Estruturação da filial internacional.</p>
+    </section>
+
+    <!-- PUBLIQUE CONOSCO (FORM) -->
+    <section id="publicar" class="section">
+      <div class="container">
+        <div class="split">
+          <div class="split__left reveal">
+            <h2 class="section__title">Publique conosco</h2>
+            <p class="section__subtitle">
+              Envie seu original e receba um retorno da equipe. Se preferir, fale direto no WhatsApp.
+            </p>
+
+            <div class="mini-faq">
+              <div class="mini-faq__item">
+                <h4>O que enviar?</h4>
+                <p>Um trecho do texto, sinopse e informações do autor (ou link do arquivo).</p>
+              </div>
+              <div class="mini-faq__item">
+                <h4>Quanto tempo para resposta?</h4>
+                <p>Coloque aqui o prazo que seu tio quiser (ex: até 7 dias úteis).</p>
+              </div>
+              <div class="mini-faq__item">
+                <h4>Gêneros</h4>
+                <p>Ficção, não ficção, poesia, infantil… (ajustamos depois com o Instagram).</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="split__right reveal">
+            <div class="form-card">
+              <div class="form-card__head">
+                <h3>Envio de original</h3>
+                <p>Preencha e clique em enviar.</p>
+              </div>
+
+              <!-- FORM REAL (Formspree) -->
+              <!-- Troque o action pelo seu endpoint do Formspree -->
+              <!-- Como criar: formspree.io -> New Form -> copia o link -->
+              <form class="form" action="https://formspree.io/f/SEU_CODIGO_AQUI" method="POST">
+                <div class="form__row">
+                  <label class="form__label">Nome</label>
+                  <input class="form__input" name="nome" type="text" placeholder="Seu nome" required>
+                </div>
+
+                <div class="form__row form__row--2">
+                  <div>
+                    <label class="form__label">E-mail</label>
+                    <input class="form__input" name="email" type="email" placeholder="seuemail@email.com" required>
+                  </div>
+                  <div>
+                    <label class="form__label">WhatsApp</label>
+                    <input class="form__input" name="whatsapp" type="tel" placeholder="(11) 99999-9999" required>
+                  </div>
+                </div>
+
+                <div class="form__row">
+                  <label class="form__label">Gênero</label>
+                  <select class="form__input" name="genero" required>
+                    <option value="">Selecione</option>
+                    <option>Romance</option>
+                    <option>Fantasia</option>
+                    <option>Ficção</option>
+                    <option>Poesia</option>
+                    <option>Infantil</option>
+                    <option>Não ficção</option>
+                    <option>Outro</option>
+                  </select>
+                </div>
+
+                <div class="form__row">
+                  <label class="form__label">Mensagem / Link do original</label>
+                  <textarea class="form__input form__textarea" name="mensagem" rows="5" placeholder="Conte sobre o livro, sinopse e/ou cole um link do arquivo (Drive/Dropbox)"></textarea>
+                </div>
+
+                <button class="btn btn--solid btn--full" type="submit">Enviar</button>
+
+                <p class="form__hint">
+                  Preferir WhatsApp? <a class="link" href="https://wa.me/5500000000000" target="_blank" rel="noopener">Clique aqui</a>.
+                  (Troque o número depois)
+                </p>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<section id="portugal" class="portugal">
-  <div class="container portugal-content">
-    <h2>Filial Portugal</h2>
-    <p>
-      A Stuchi Editora expande suas fronteiras. Em breve, nossa filial em Portugal conectará novos
-      autores ao mercado internacional.
-    </p>
-  </div>
-</section>
+    <!-- LANÇAMENTOS -->
+    <section id="lancamentos" class="section section--alt">
+      <div class="container">
+        <div class="section__head reveal">
+          <h2 class="section__title">Lançamentos</h2>
+          <p class="section__subtitle">Uma vitrine do que estamos construindo. Depois vocês trocam pelos livros reais.</p>
+        </div>
 
-<section id="contato" class="contato">
-  <div class="container contato-box">
-    <h2>Entre em contato</h2>
-    <p>Envie seu original ou fale com nossa equipe.</p>
+        <div class="books">
+          <!-- Card 1 -->
+          <article class="book reveal">
+            <div class="book__cover" aria-hidden="true">
+              <div class="book__shine"></div>
+              <div class="book__tag">NOVO</div>
+            </div>
+            <div class="book__info">
+              <h3 class="book__title">Título do Livro</h3>
+              <p class="book__meta">Autor(a) • 2026</p>
+              <p class="book__desc">Descrição curta do livro. Depois você substitui pelo texto real.</p>
+              <a class="link" href="#contato">Quero saber mais →</a>
+            </div>
+          </article>
 
-    <div class="contato-actions">
-      <a href="https://wa.me/5500000000000" target="_blank" class="btn">Falar no WhatsApp</a>
-      <a href="mailto:contato@stuchieditora.com" class="btn-outline">Enviar e-mail</a>
-    </div>
+          <!-- Card 2 -->
+          <article class="book reveal">
+            <div class="book__cover book__cover--2" aria-hidden="true">
+              <div class="book__shine"></div>
+              <div class="book__tag">DESTAQUE</div>
+            </div>
+            <div class="book__info">
+              <h3 class="book__title">Título do Livro</h3>
+              <p class="book__meta">Autor(a) • 2026</p>
+              <p class="book__desc">Descrição curta do livro. Depois você substitui pelo texto real.</p>
+              <a class="link" href="#contato">Quero saber mais →</a>
+            </div>
+          </article>
 
-    <p class="placeholder-text">Formulário profissional será adicionado.</p>
-  </div>
-</section>
+          <!-- Card 3 -->
+          <article class="book reveal">
+            <div class="book__cover book__cover--3" aria-hidden="true">
+              <div class="book__shine"></div>
+              <div class="book__tag">EM BREVE</div>
+            </div>
+            <div class="book__info">
+              <h3 class="book__title">Título do Livro</h3>
+              <p class="book__meta">Autor(a) • 2026</p>
+              <p class="book__desc">Descrição curta do livro. Depois você substitui pelo texto real.</p>
+              <a class="link" href="#contato">Quero saber mais →</a>
+            </div>
+          </article>
+        </div>
 
-<footer class="footer">
-  <p>© 2026 Stuchi Editora — Todos os direitos reservados.</p>
-</footer>
+        <div class="cta reveal">
+          <div class="cta__box">
+            <h3>Quer ver seu livro aqui?</h3>
+            <p>Envie seu original e comece seu processo editorial com a Stuchi.</p>
+            <a class="btn btn--solid" href="#publicar">Enviar original</a>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<script src="assets/js/main.js"></script>
+    <!-- STATUS -->
+    <section id="status" class="section">
+      <div class="container">
+        <div class="status">
+          <div class="status__left reveal">
+            <h2 class="section__title">Status da editora</h2>
+            <p class="section__subtitle">
+              Aqui você pode mostrar números (quando tiver) e o momento atual da Stuchi.
+            </p>
+            <div class="stats">
+              <div class="stat">
+                <div class="stat__num">X</div>
+                <div class="stat__label">Livros publicados</div>
+              </div>
+              <div class="stat">
+                <div class="stat__num">X</div>
+                <div class="stat__label">Em produção</div>
+              </div>
+              <div class="stat">
+                <div class="stat__num">X</div>
+                <div class="stat__label">Autores atendidos</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="status__right">
+            <article class="card reveal">
+              <h3 class="card__title">📚 Projetos em andamento</h3>
+              <p class="card__text">Originais em avaliação, preparação e desenvolvimento editorial.</p>
+            </article>
+            <article class="card reveal">
+              <h3 class="card__title">✍️ Formação de autores</h3>
+              <p class="card__text">Orientação e acompanhamento para evoluir a escrita com profissionalismo.</p>
+            </article>
+            <article class="card reveal">
+              <h3 class="card__title">🚀 Expansão</h3>
+              <p class="card__text">Crescimento da estrutura e conexão com o mercado internacional.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PORTUGAL -->
+    <section id="portugal" class="section section--alt">
+      <div class="container">
+        <div class="portugal">
+          <div class="portugal__copy reveal">
+            <h2 class="section__title">Filial Portugal</h2>
+            <p class="section__subtitle">
+              Expansão internacional para conectar autores ao mercado europeu. Aqui você coloca endereço e contato quando tiver.
+            </p>
+
+            <ul class="list">
+              <li>Atendimento Brasil e Portugal</li>
+              <li>Planejamento editorial para publicação internacional</li>
+              <li>Suporte e orientação em cada etapa</li>
+            </ul>
+
+            <div class="hero__actions">
+              <a class="btn btn--solid" href="#contato">Entrar em contato</a>
+              <a class="btn btn--outline" href="#publicar">Enviar original</a>
+            </div>
+          </div>
+
+          <div class="portugal__card reveal">
+            <div class="location">
+              <div class="location__top">
+                <span class="location__badge">Em breve</span>
+                <span class="location__city">Portugal</span>
+              </div>
+              <div class="location__body">
+                <p><strong>Cidade:</strong> (colocar depois)</p>
+                <p><strong>E-mail:</strong> (colocar depois)</p>
+                <p><strong>Contato:</strong> (colocar depois)</p>
+              </div>
+              <div class="location__foot">
+                <p class="muted">Quando tiver os dados, a gente substitui rapidinho.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTATO -->
+    <section id="contato" class="section">
+      <div class="container">
+        <div class="contact reveal">
+          <div class="contact__head">
+            <h2 class="section__title">Contato</h2>
+            <p class="section__subtitle">Escolha o canal que preferir.</p>
+          </div>
+
+          <div class="contact__grid">
+            <a class="contact__item" href="https://wa.me/5500000000000" target="_blank" rel="noopener">
+              <div class="contact__icon">💬</div>
+              <div>
+                <h3>WhatsApp</h3>
+                <p class="muted">Resposta rápida</p>
+              </div>
+              <span class="contact__arrow">→</span>
+            </a>
+
+            <a class="contact__item" href="mailto:contato@stuchieditora.com">
+              <div class="contact__icon">✉️</div>
+              <div>
+                <h3>E-mail</h3>
+                <p class="muted">Contato formal</p>
+              </div>
+              <span class="contact__arrow">→</span>
+            </a>
+
+            <a class="contact__item" href="#publicar">
+              <div class="contact__icon">📄</div>
+              <div>
+                <h3>Enviar original</h3>
+                <p class="muted">Formulário da editora</p>
+              </div>
+              <span class="contact__arrow">→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container footer__inner">
+        <p>© 2026 Stuchi Editora — Todos os direitos reservados.</p>
+        <a class="link" href="#top">Voltar ao topo ↑</a>
+      </div>
+    </footer>
+  </main>
+
+  <script src="assets/js/main.js"></script>
 </body>
 </html>
