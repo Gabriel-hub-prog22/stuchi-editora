@@ -53,3 +53,13 @@ const io = new IntersectionObserver((entries) => {
 }, { threshold: 0.12 });
 
 items.forEach(el => io.observe(el));
+// ===== Voltar ao topo (forçado) =====
+document.querySelectorAll('a[href="#top"]').forEach(link => {
+  link.addEventListener("click", (e) => {
+    e.preventDefault();
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  });
+});
