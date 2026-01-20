@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lançamentos | Stuchi Editora</title>
+    <meta name="description"
+        content="Conheça os livros publicados pela Stuchi Editora. Obras de ficção, poesia e técnica, desenvolvidas com orientação editorial profissional." />
+    <meta name="theme-color" content="#0b0b0d" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500,700&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+    <!-- Anchor topo -->
+    <div id="top"></div>
+
+    <!-- Progress bar -->
+    <div class="progress" aria-hidden="true">
+        <div class="progress__bar" id="progressBar"></div>
+    </div>
+
+    <header class="header" id="siteHeader">
+        <div class="container header__inner">
+            <a class="brand" href="index.html" aria-label="Ir para o início">
+                <img src="assets/img/logo.png" alt="Stuchi Editora" class="brand__logo">
+            </a>
+
+            <button class="menu-btn" id="menuBtn" aria-label="Abrir menu" aria-expanded="false" aria-controls="navMenu">
+                <span class="menu-btn__icon" aria-hidden="true"></span>
+            </button>
+
+            <nav class="nav" id="navMenu" aria-label="Menu principal">
+                <a href="index.html" class="nav__link">Início</a>
+                <a href="publique-conosco.html" class="nav__link">Publique Conosco</a>
+                <a href="lancamentos.html" class="nav__link is-active">Lançamentos</a>
+                <a href="mentorias.html" class="nav__link">Mentorias</a>
+                <a href="eventos.html" class="nav__link">Eventos</a>
+                <a href="imprensa.html" class="nav__link">Imprensa</a>
+                <a href="portugal.html" class="nav__link">Portugal</a>
+                <a href="#contato" class="btn btn--outline nav__cta">Contato</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- HERO -->
+        <section class="hero" style="min-height:60vh; padding-top:140px;">
+            <div class="hero__bg" aria-hidden="true"></div>
+
+            <div class="container center reveal">
+                <div class="pill">Catálogo • Ficção • Não-ficção</div>
+                <h1 class="hero__title">
+                    Histórias que
+                    <span class="hero__title-accent">inspiram e transformam.</span>
+                </h1>
+                <p class="hero__subtitle" style="margin-left:auto; margin-right:auto;">
+                    Conheça as obras de nossos autores. Livros desenvolvidos com cuidado editorial, design premium e
+                    propósito.
+                </p>
+            </div>
+        </section>
+
+        <!-- DESTAQUES (Recent Releases) -->
+        <section class="section section--alt">
+            <div class="container">
+                <div class="section__head reveal">
+                    <h2 class="section__title">Destaques da Editora</h2>
+                    <p class="section__subtitle">Os lançamentos mais recentes que estão dando o que falar.</p>
+                </div>
+
+                <div class="book-grid vector-grid reveal">
+                    <!-- Livro Destaque 1 -->
+                    <article class="book-card">
+                        <div class="book-cover">
+                            <div class="book-placeholder">Capa do Livro</div>
+                            <span class="book-badge">Novo</span>
+                        </div>
+                        <div class="book-info">
+                            <h3 class="book-title">O Silêncio das Palavras</h3>
+                            <p class="book-author">por Juliana Matos</p>
+                            <p class="book-synopsis">Um romance emocionante sobre reencontros e segredos de família que
+                                atravessam gerações.</p>
+                            <a href="#" class="btn btn--outline btn--sm btn--full">Ver detalhes</a>
+                        </div>
+                    </article>
+
+                    <!-- Livro Destaque 2 -->
+                    <article class="book-card">
+                        <div class="book-cover">
+                            <div class="book-placeholder">Capa do Livro</div>
+                            <span class="book-badge">Best-seller</span>
+                        </div>
+                        <div class="book-info">
+                            <h3 class="book-title">Marketing para Escritores</h3>
+                            <p class="book-author">por Equipe Stuchi</p>
+                            <p class="book-synopsis">Guia prático para autores que desejam construir sua marca pessoal e
+                                vender mais livros.</p>
+                            <a href="#" class="btn btn--outline btn--sm btn--full">Ver detalhes</a>
+                        </div>
+                    </article>
+
+                    <!-- Livro Destaque 3 -->
+                    <article class="book-card">
+                        <div class="book-cover">
+                            <div class="book-placeholder">Capa do Livro</div>
+                        </div>
+                        <div class="book-info">
+                            <h3 class="book-title">Poesias de Outono</h3>
+                            <p class="book-author">por Carlos Drumond (Fictício)</p>
+                            <p class="book-synopsis">Uma coletânea sensível que explora a melancolia e a beleza das
+                                mudanças da vida.</p>
+                            <a href="#" class="btn btn--outline btn--sm btn--full">Ver detalhes</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- CATÁLOGO GERAL -->
+        <section id="catalogo" class="section">
+            <div class="container">
+                <div class="section__head reveal">
+                    <h2 class="section__title">Catálogo Completo</h2>
+                    <!-- Filtros simples (visuais) -->
+                    <div class="filters"
+                        style="margin-top:20px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+                        <button class="pill" style="cursor:pointer; background:rgba(255,255,255,0.1);">Todos</button>
+                        <button class="pill" style="cursor:pointer; background:transparent;">Ficção</button>
+                        <button class="pill" style="cursor:pointer; background:transparent;">Poesia</button>
+                        <button class="pill" style="cursor:pointer; background:transparent;">Técnicos</button>
+                    </div>
+                </div>
+
+                <div class="book-grid reveal" style="margin-top:40px;">
+                    <!-- Livro 4 -->
+                    <article class="book-card">
+                        <div class="book-cover">
+                            <div class="book-placeholder">Capa</div>
+                        </div>
+                        <div class="book-info">
+                            <h3 class="book-title">A Cidade Invisível</h3>
+                            <p class="book-author">por Marcos Silva</p>
+                            <a href="#" class="link" style="font-size:0.9rem;">Saiba mais →</a>
+                        </div>
+                    </article>
+
+                    <!-- Livro 5 -->
+                    <article class="book-card">
+                        <div class="book-cover">
+                            <div class="book-placeholder">Capa</div>
+                        </div>
+                        <div class="book-info">
+                            <h3 class="book-title">Gestão de Tempo</h3>
+                            <p class="book-author">por Ana Paula</p>
+                            <a href="#" class="link" style="font-size:0.9rem;">Saiba mais →</a>
+                        </div>
+                    </article>
+
+                    <!-- Livro 6 -->
+                    <article class="book-card">
+                        <div class="book-cover">
+                            <div class="book-placeholder">Capa</div>
+                        </div>
+                        <div class="book-info">
+                            <h3 class="book-title">Crônicas Urbanas</h3>
+                            <p class="book-author">por Roberto Jr.</p>
+                            <a href="#" class="link" style="font-size:0.9rem;">Saiba mais →</a>
+                        </div>
+                    </article>
+
+                    <!-- Livro 7 -->
+                    <article class="book-card">
+                        <div class="book-cover">
+                            <div class="book-placeholder">Capa</div>
+                        </div>
+                        <div class="book-info">
+                            <h3 class="book-title">O Último Suspiro</h3>
+                            <p class="book-author">por Carla Diaz</p>
+                            <a href="#" class="link" style="font-size:0.9rem;">Saiba mais →</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- EM BREVE -->
+        <section class="section section--alt">
+            <div class="container">
+                <div class="cta__box reveal">
+                    <div>
+                        <span class="pill" style="margin-bottom:12px; background:rgba(255,255,255,0.1);">Em breve</span>
+                        <h3>Antologia: Vozes do Futuro</h3>
+                        <p>Uma coletânea sci-fi com 15 autores selecionados em nosso último concurso literário.</p>
+                        <p style="margin-top:10px; font-size:0.9rem; color:var(--muted2);">Pré-venda disponível a partir
+                            de Novembro/2026.</p>
+                    </div>
+                    <a href="#" class="btn btn--outline">Entrar na lista de espera</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- INSTITUCIONAL / CTA -->
+        <section class="section">
+            <div class="container center reveal">
+                <h2 class="section__title" style="font-size:1.8rem; margin-bottom:18px;">Seu livro merece esse cuidado
+                </h2>
+                <p class="section__subtitle" style="margin-bottom:30px;">
+                    Da preparação do texto ao design da capa, tratamos cada obra como única.
+                    Quer ver seu livro em nosso catálogo?
+                </p>
+                <a href="publique-conosco.html" class="btn btn--solid">Quero publicar meu livro</a>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <div class="container footer__inner">
+                <p>© 2026 Stuchi Editora — Todos os direitos reservados.</p>
+                <button class="link link--btn" id="backToTop" type="button">Voltar ao topo ↑</button>
+            </div>
+        </footer>
+    </main>
+
+    <script src="assets/js/main.js"></script>
+</body>
+
+</html>

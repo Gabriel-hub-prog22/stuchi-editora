@@ -739,6 +739,183 @@ a {
   overflow: hidden;
 }
 
+
+/* ========== IMPRENSA ========== */
+.logo-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 32px 48px;
+  opacity: 0.6;
+}
+
+.logo-item {
+  font-weight: 700;
+  font-size: 1.2rem;
+  font-family: 'Fraunces', serif;
+  letter-spacing: -0.03em;
+  color: var(--white);
+}
+
+.media-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 1px solid rgba(255, 255, 255, .08);
+  background: rgba(255, 255, 255, .02);
+  border-radius: 18px;
+  padding: 24px;
+  transition: .3s ease;
+}
+
+.media-card:hover {
+  background: rgba(255, 255, 255, .05);
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, .15);
+}
+
+.media-card__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 0.85rem;
+}
+
+.media-source {
+  font-weight: 700;
+  color: var(--white);
+  padding: 4px 8px;
+  background: rgba(255, 255, 255, .1);
+  border-radius: 6px;
+}
+
+.media-date {
+  color: var(--muted2);
+}
+
+.media-card__title {
+  font-size: 1.15rem;
+  line-height: 1.4;
+  margin-bottom: 10px;
+  font-family: 'Inter', sans-serif;
+  /* Keep generic for readability */
+}
+
+.media-card__text {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin-bottom: 20px;
+  flex: 1;
+}
+
+.media-card .link {
+  align-self: flex-start;
+  color: var(--white);
+  opacity: 0.8;
+  font-weight: 500;
+}
+
+.media-card .link:hover {
+  opacity: 1;
+}
+
+
+/* ========== LANCAMENTOS ========== */
+.vector-grid {
+  /* Destaque visual: itens levemente deslocados ou com layout especial se desejado futuramente */
+  position: relative;
+}
+
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 24px;
+}
+
+.book-card {
+  background: transparent;
+  border-radius: 12px;
+  transition: .3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.book-cover {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1/1.5;
+  /* Vertical cover */
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 14px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, .3);
+  background: rgba(255, 255, 255, .05);
+  transition: .3s ease;
+}
+
+.book-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted2);
+  font-size: 0.9rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, .05) 0%, rgba(255, 255, 255, .02) 100%);
+}
+
+.book-card:hover .book-cover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 24px rgba(0, 0, 0, .4);
+}
+
+.book-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #fff;
+  color: #000;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  z-index: 2;
+}
+
+.book-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.book-title {
+  font-family: 'Fraunces', serif;
+  font-size: 1.1rem;
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+
+.book-author {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.book-synopsis {
+  font-size: 0.9rem;
+  color: var(--muted2);
+  margin-bottom: 16px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex: 1;
+}
+
 /* ========== MOBILE ========== */
 @media (max-width: 980px) {
   .hero__grid {
@@ -759,7 +936,7 @@ a {
   }
 
   .press-grid {
-    grid-template-columns: repeat(2, 1fr)
+    grid-template-columns: 1fr
   }
 
   /* Agenda Mobile */
