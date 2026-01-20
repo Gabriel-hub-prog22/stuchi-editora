@@ -1,3 +1,8 @@
+// ===============================
+//  Stuchi Editora - JS Global
+//  Menu • Scroll • Progress • Reveal • BackToTop • Active link
+// ===============================
+
 // ===== Menu mobile =====
 const menuBtn = document.getElementById("menuBtn");
 const navMenu = document.getElementById("navMenu");
@@ -26,6 +31,11 @@ if (menuBtn && navMenu) {
     const clickedInside = navMenu.contains(e.target) || menuBtn.contains(e.target);
     if (!clickedInside) closeMenu();
   });
+
+  // Fecha menu ao dar scroll (mobile)
+  window.addEventListener("scroll", () => {
+    if (navMenu.classList.contains("is-open")) closeMenu();
+  }, { passive: true });
 }
 
 // ===== Header efeito ao rolar =====
@@ -34,7 +44,7 @@ window.addEventListener("scroll", () => {
   if (!header) return;
   if (window.scrollY > 10) header.classList.add("header--scrolled");
   else header.classList.remove("header--scrolled");
-});
+}, { passive: true });
 
 // ===== Progress bar =====
 const progressBar = document.getElementById("progressBar");
@@ -44,11 +54,10 @@ window.addEventListener("scroll", () => {
   const docHeight = document.documentElement.scrollHeight - window.innerHeight;
   const p = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
   progressBar.style.width = `${p}%`;
-});
+}, { passive: true });
 
-// ===== Reveal animations (com fallback) =====
+// ===== Reveal animations =====
 const items = document.querySelectorAll(".reveal");
-
 if ("IntersectionObserver" in window) {
   const io = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -61,19 +70,34 @@ if ("IntersectionObserver" in window) {
 
   items.forEach(el => io.observe(el));
 } else {
-  // Se o navegador não suportar, mostra tudo
   items.forEach(el => el.classList.add("is-visible"));
 }
 
-// ===== Voltar ao topo (garantido) =====
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll('a[href="#top"]').forEach(link => {
-    link.addEventListener("click", (e) => {
-      e.preventDefault();
-      closeMenu();
-      window.scrollTo({ top: 0, behavior: "smooth" });
-      // opcional: limpar o hash pra não ficar "#top" na URL
-      history.replaceState(null, "", window.location.pathname + window.location.search);
-    });
+// ===== Back to top (garantido) =====
+const backToTop = document.getElementById("backToTop");
+if (backToTop) {
+  backToTop.addEventListener("click", () => {
+    closeMenu();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
   });
-});
+}
+
+// ===== Marca link ativo (multipágina) =====
+(function markActiveNav() {
+  const links = document.querySelectorAll(".nav a[href]");
+  if (!links.length) return;
+
+  const path = (location.pathname.split("/").pop() || "index.html").toLowerCase();
+
+  links.forEach(a => a.classList.remove("is-active"));
+
+  links.forEach(a => {
+    const href = (a.getAttribute("href") || "").toLowerCase();
+    if (!href) return;
+
+    // marca página atual
+    if (href === path) a.classList.add("is-active");
+  });
+})();
