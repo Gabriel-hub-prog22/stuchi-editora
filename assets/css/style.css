@@ -96,12 +96,25 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 0;
+  padding: 12px 0; /* Slightly reduced padding to accommodate larger logo */
   position: relative;
 }
 
 .brand__logo {
-  height: 42px
+  height: 58px; /* Desktop: 52px - 64px */
+  width: auto;
+  transition: transform .3s ease, opacity .3s ease;
+}
+
+.brand:hover .brand__logo {
+  transform: scale(1.03);
+  opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+  .brand__logo {
+    height: 42px; /* Mobile: 40px - 44px */
+  }
 }
 
 /* ========== NAV ========== */
