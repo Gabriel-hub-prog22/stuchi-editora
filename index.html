@@ -119,7 +119,9 @@
           <!-- Removido subtítulo longo conforme instrução -->
         </div>
 
-        <div class="grid grid--3">
+        <!-- Grid com 4 itens: Mentorias, Podcast, Lançamentos, Qualidade -->
+        <!-- Usando inline style para garantir 2 colunas como o usuário pediu "layout estrutural" parecido mas com 4 itens, 4 colunas ficaria muito espremido. 2x2 é o ideal. -->
+        <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
           <article class="card reveal">
             <h3 class="card__title">Mentorias</h3>
             <p class="card__text">Aprenda a escrever com orientação prática e acompanhamento editorial.</p>
@@ -133,14 +135,15 @@
           </article>
 
           <article class="card reveal">
+            <h3 class="card__title">Lançamentos</h3>
+            <p class="card__text">Conheça as novas obras e autores formados pela casa.</p>
+            <a class="link" href="lancamentos.html">Ver Lançamentos →</a>
+          </article>
+
+          <article class="card reveal">
             <h3 class="card__title">Qualidade Editorial</h3>
             <p class="card__text">Preparação, revisão, capa e diagramação com padrão de editora.</p>
-            <!-- A instrução pede "Frase curta sobre o diferencial editorial" e "Publicação - Botão principal" separado, mas a estrutura já tem botões.
-                 Vou manter um link discreto aqui ou remover se o botão principal abaixo for o suficiente.
-                 A instrução 2) diz: QUALIDADE EDITORIAL - Frase curta. PUBLICAÇÃO - Botão principal para publicação.
-                 O layout atual tem um botão no card. Vou manter apontando para publique e o CTA maior embaixo.
-            -->
-            <a class="link" href="publique-conosco.html">Como publicar →</a>
+            <!-- Sem botão conforme pedido na tarefa 1 "Qualidade editorial (1 frase)" -->
           </article>
         </div>
 
