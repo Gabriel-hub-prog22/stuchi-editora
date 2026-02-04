@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Book {
+  id          String   @id @default(uuid())
+  title       String
+  authors     String
+  description String
+  price       Decimal  @db.Decimal(10, 2)
+  link        String? // Link para compra
+  coverImage  String? // URL da imagem
+  status      String   @default("published") // published | coming_soon
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Application {
+  id         String   @id @default(uuid())
+  name       String
+  email      String
+  genre      String
+  otherGenre String?
+  pitch      String
+  createdAt  DateTime @default(now())
+}
+
+model PressItem {
+  id          String   @id @default(uuid())
+  title       String
+  mediaOutlet String
+  summary     String
+  link        String
+  isHighlight Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model PodcastEpisode {
+  id              String   @id @default(uuid())
+  title           String
+  description     String
+  youtubeEmbedUrl String
+  publishedAt     DateTime
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}

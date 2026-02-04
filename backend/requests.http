@@ -1,0 +1,117 @@
+@baseUrl = http://localhost:3000
+
+### --- AUTH ---
+
+### 1. Login (Obter Token)
+# @name login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+    "email": "admin@stuchieditora.com",
+    "password": "Admin@12345"
+}
+
+### Variavel Token
+@token = {{login.response.body.access_token}}
+
+
+### --- APLICAÇÕES (Publique Conosco) ---
+
+### 2. Enviar Aplicação (Público)
+POST {{baseUrl}}/aplicacoes
+Content-Type: application/json
+
+{
+    "name": "João Silva",
+    "email": "joao@email.com",
+    "genre": "poesia",
+    "pitch": "Um livro sobre a natureza e sentimentos..."
+}
+
+### 3. Enviar Aplicação com 'Outro' Gênero (Público)
+POST {{baseUrl}}/aplicacoes
+Content-Type: application/json
+
+{
+    "name": "Maria Souza",
+    "email": "maria@email.com",
+    "genre": "outro",
+    "otherGenre": "Ficção Científica",
+    "pitch": "Uma viagem no tempo..."
+}
+
+### 4. Listar Aplicações (Admin - Requer Token)
+GET {{baseUrl}}/aplicacoes
+Authorization: Bearer {{token}}
+
+
+### --- LIVROS (Lançamentos) ---
+
+### 5. Listar Livros (Público)
+GET {{baseUrl}}/livros
+
+### 6. Criar Livro (Admin)
+POST {{baseUrl}}/livros
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "title": "A Jornada do Herói",
+    "authors": "Ana Pereira",
+    "description": "Uma história emocionante de superação.",
+    "price": 49.90,
+    "link": "https://amazon.com.br/livro",
+    "status": "published"
+}
+
+### 7. Atualizar Livro (Admin)
+# Substitua o ID abaixo por um ID real retornado na listagem
+PUT {{baseUrl}}/livros/uuid-do-livro-aqui
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "price": 39.90
+}
+
+### 8. Deletar Livro (Admin)
+DELETE {{baseUrl}}/livros/uuid-do-livro-aqui
+Authorization: Bearer {{token}}
+
+
+### --- IMPRENSA ---
+
+### 9. Listar Imprensa (Público)
+GET {{baseUrl}}/imprensa
+
+### 10. Criar Matéria (Admin)
+POST {{baseUrl}}/imprensa
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "title": "Stuchi Editora na Bienal",
+    "mediaOutlet": "Jornal da Cidade",
+    "summary": "Participação da editora no maior evento literário.",
+    "link": "https://jornal.com/materia",
+    "isHighlight": true
+}
+
+
+### --- PODCAST ---
+
+### 11. Listar Episódios (Público)
+GET {{baseUrl}}/podcast
+
+### 12. Criar Episódio (Admin)
+POST {{baseUrl}}/podcast
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "title": "Episódio 1 - Como começar a escrever",
+    "description": "Dicas para novos autores.",
+    "youtubeEmbedUrl": "https://www.youtube.com/embed/xyz123",
+    "publishedAt": "2023-10-27T10:00:00Z"
+}
