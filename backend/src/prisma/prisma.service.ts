@@ -7,11 +7,11 @@ export class PrismaService
     implements OnModuleInit, OnModuleDestroy {
     async onModuleInit() {
         // Prevent connection errors from crashing the app startup
-        try {
-            await this.$connect();
-        } catch (error) {
+        // We do NOT await the connection here to allow the HTTP server to start immediately
+        // Prisma will connect lazily on the first request
+        this.$connect().catch((error) => {
             console.error('Failed to connect to database during bootstrap:', error);
-        }
+        });
     }
 
     async onModuleDestroy() {
