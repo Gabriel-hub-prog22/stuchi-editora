@@ -379,6 +379,9 @@
             const outroInput = document.getElementById('outro');
             const submitBtn = form.querySelector('button[type="submit"]');
 
+            // Configuração do WhatsApp
+            const WHATSAPP_NUMBER = "5511969569809";
+
             // Criar container de feedback dinamicamente
             const feedbackBox = document.createElement("div");
             feedbackBox.className = "form-feedback-box";
@@ -391,7 +394,6 @@
                 outroInput.required = isOutro;
                 if (!isOutro) outroInput.value = '';
 
-                // Pequena animação de fade se virar bloco
                 if (isOutro) {
                     outroContainer.style.opacity = 0;
                     setTimeout(() => outroContainer.style.opacity = 1, 10);
@@ -416,11 +418,6 @@
                     if (!input.value.trim()) {
                         isValid = false;
                         input.classList.add("input-error");
-
-                        // Fazer scroll suave até o primeiro erro se necessário
-                        if (isValid === false) { // first error found
-                            // input.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        }
                     }
                 });
 
@@ -434,10 +431,8 @@
                 // Estado de Loading
                 const originalText = submitBtn.innerText;
                 submitBtn.classList.add("btn--loading");
+                submitBtn.innerText = "Abrindo WhatsApp...";
                 submitBtn.disabled = true;
-
-                // Hack para acessibilidade: manter texto legível para screen readers mas invisível visualmente
-                // No CSS color transparent oculta.
 
                 // Coletar Dados
                 const nome = document.getElementById("nome").value;
@@ -449,22 +444,32 @@
                     genero = outroInput.value;
                 }
 
-                const recipient = "contatos@stuchieditora.com";
-                const subject = "Nova submissão editorial";
-                const body = `Nome: ${nome}\nEmail: ${email}\nGênero: ${genero}\nPitch:\n${pitch}`;
+                // Montar mensagem formatada
+                const message = `Nova submissão editorial
 
-                const mailtoLink = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+Nome: ${nome}
+Email: ${email}
+Gênero: ${genero}
+Pitch do livro:
+${pitch}`;
+
+                const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 
                 // Simular delay de processamento para UX (1.5s)
                 setTimeout(() => {
-                    // Abrir cliente de email
-                    window.location.href = mailtoLink;
+                    // Abrir WhatsApp em nova aba
+                    const newWindow = window.open(whatsappUrl, '_blank');
+
+                    // Fallback se popup for bloqueado
+                    if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
+                        window.location.href = whatsappUrl;
+                    }
 
                     // Feedback de Sucesso
                     submitBtn.classList.remove("btn--loading");
-                    submitBtn.innerText = "Verifique seu e-mail";
+                    submitBtn.innerText = "Verifique o WhatsApp";
 
-                    feedbackBox.innerHTML = "<strong>Seu aplicativo de e-mail foi aberto.</strong><br>Finalize o clique em 'Enviar' no seu programa de e-mail.";
+                    feedbackBox.innerHTML = "<strong>Seu WhatsApp foi aberto com os dados.</strong><br>Basta clicar em enviar na conversa.";
                     feedbackBox.classList.add("feedback-success");
                     feedbackBox.style.display = "block";
 
@@ -473,7 +478,6 @@
                         submitBtn.disabled = false;
                         submitBtn.innerText = originalText;
                         form.reset();
-                        // feedbackBox.style.display = "none"; // Opção: manter a mensagem visível por mais tempo
                     }, 8000);
 
                 }, 1500);
