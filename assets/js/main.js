@@ -1,181 +1,103 @@
-/**
- * Stuchi Editora - Main Functionalities
- * Compatible with GitHub Pages & Responsive Layouts
- * 
- * Features:
- * - Mobile Menu Toggle
- * - Header Scroll Effect
- * - Reading Progress Bar
- * - Scroll Reveal Animations
- * - Back to Top Button
- * - Active Navigation Link
- */
+// ===============================
+//  Stuchi Editora - JS Global
+//  Menu • Scroll • Progress • Reveal • BackToTop • Active link
+// ===============================
 
-(function () {
-    'use strict';
+// ===== Menu mobile =====
+const menuBtn = document.getElementById("menuBtn");
+const navMenu = document.getElementById("navMenu");
 
-    // Helper to safely select elements
-    const select = (selector) => document.querySelector(selector);
-    const selectAll = (selector) => document.querySelectorAll(selector);
+function closeMenu() {
+  if (!navMenu || !menuBtn) return;
+  navMenu.classList.remove("is-open");
+  menuBtn.classList.remove("is-open");
+  menuBtn.setAttribute("aria-expanded", "false");
+}
 
-    // =========================================
-    // 1. Mobile Menu Toggle
-    // =========================================
-    function initMobileMenu() {
-        const menuBtn = document.getElementById("menuBtn");
-        const navMenu = document.getElementById("navMenu");
+if (menuBtn && navMenu) {
+  menuBtn.addEventListener("click", () => {
+    const open = navMenu.classList.toggle("is-open");
+    menuBtn.classList.toggle("is-open", open);
+    menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
+  });
 
-        if (!menuBtn || !navMenu) return;
+  // Fecha menu ao clicar em um link
+  navMenu.querySelectorAll("a").forEach(a => {
+    a.addEventListener("click", () => closeMenu());
+  });
 
-        const closeMenu = () => {
-            navMenu.classList.remove("is-open");
-            menuBtn.classList.remove("is-open");
-            menuBtn.setAttribute("aria-expanded", "false");
-        };
+  // Fecha menu clicando fora
+  document.addEventListener("click", (e) => {
+    const clickedInside = navMenu.contains(e.target) || menuBtn.contains(e.target);
+    if (!clickedInside) closeMenu();
+  });
 
-        menuBtn.addEventListener("click", (e) => {
-            e.stopPropagation(); // Prevent immediate close
-            const isOpen = navMenu.classList.toggle("is-open");
-            menuBtn.classList.toggle("is-open", isOpen);
-            menuBtn.setAttribute("aria-expanded", isOpen);
-        });
+  // Fecha menu ao dar scroll (mobile)
+  window.addEventListener("scroll", () => {
+    if (navMenu.classList.contains("is-open")) closeMenu();
+  }, { passive: true });
+}
 
-        // Close when clicking links
-        navMenu.querySelectorAll("a").forEach(link => {
-            link.addEventListener("click", closeMenu);
-        });
+// ===== Header efeito ao rolar =====
+const header = document.querySelector(".header");
+window.addEventListener("scroll", () => {
+  if (!header) return;
+  if (window.scrollY > 10) header.classList.add("header--scrolled");
+  else header.classList.remove("header--scrolled");
+}, { passive: true });
 
-        // Close when clicking outside
-        document.addEventListener("click", (e) => {
-            if (navMenu.classList.contains("is-open") &&
-                !navMenu.contains(e.target) &&
-                !menuBtn.contains(e.target)) {
-                closeMenu();
-            }
-        });
+// ===== Progress bar =====
+const progressBar = document.getElementById("progressBar");
+window.addEventListener("scroll", () => {
+  if (!progressBar) return;
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const p = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+  progressBar.style.width = `${p}%`;
+}, { passive: true });
 
-        // Close on scroll (mostly for convenience)
-        window.addEventListener("scroll", () => {
-            if (navMenu.classList.contains("is-open")) closeMenu();
-        }, { passive: true });
-    }
+// ===== Reveal animations =====
+const items = document.querySelectorAll(".reveal");
+if ("IntersectionObserver" in window) {
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-visible");
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
 
-    // =========================================
-    // 2. Header Scroll Effect
-    // =========================================
-    function initHeaderScroll() {
-        const header = select(".header");
-        if (!header) return;
+  items.forEach(el => io.observe(el));
+} else {
+  items.forEach(el => el.classList.add("is-visible"));
+}
 
-        window.addEventListener("scroll", () => {
-            if (window.scrollY > 10) {
-                header.classList.add("header--scrolled");
-            } else {
-                header.classList.remove("header--scrolled");
-            }
-        }, { passive: true });
-    }
+// ===== Back to top (garantido) =====
+const backToTop = document.getElementById("backToTop");
+if (backToTop) {
+  backToTop.addEventListener("click", () => {
+    closeMenu();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  });
+}
 
-    // =========================================
-    // 3. Reading Progress Bar
-    // =========================================
-    function initProgressBar() {
-        const progressBar = document.getElementById("progressBar");
-        if (!progressBar) return;
+// ===== Marca link ativo (multipágina) =====
+(function markActiveNav() {
+  const links = document.querySelectorAll(".nav a[href]");
+  if (!links.length) return;
 
-        window.addEventListener("scroll", () => {
-            const scrollTotal = document.documentElement.scrollHeight - window.innerHeight;
-            const scrollCurrent = window.scrollY;
+  const path = (location.pathname.split("/").pop() || "index.html").toLowerCase();
 
-            let progress = 0;
-            if (scrollTotal > 0) {
-                progress = (scrollCurrent / scrollTotal) * 100;
-            }
+  links.forEach(a => a.classList.remove("is-active"));
 
-            progressBar.style.width = `${Math.min(100, Math.max(0, progress))}%`;
-        }, { passive: true });
-    }
+  links.forEach(a => {
+    const href = (a.getAttribute("href") || "").toLowerCase();
+    if (!href) return;
 
-    // =========================================
-    // 4. Reveal Animations
-    // =========================================
-    function initRevealAnimations() {
-        const items = selectAll(".reveal");
-        if (items.length === 0) return;
-
-        if ("IntersectionObserver" in window) {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add("is-visible");
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            items.forEach(item => observer.observe(item));
-        } else {
-            // Fallback for older browsers
-            items.forEach(item => item.classList.add("is-visible"));
-        }
-    }
-
-    // =========================================
-    // 5. Back to Top Button
-    // =========================================
-    function initBackToTop() {
-        const backToTop = document.getElementById("backToTop");
-        if (!backToTop) return;
-
-        backToTop.addEventListener("click", (e) => {
-            e.preventDefault();
-            window.scrollTo({ top: 0, behavior: "smooth" });
-        });
-    }
-
-    // =========================================
-    // 6. Active Navigation Link
-    // =========================================
-    function initActiveLink() {
-        const links = selectAll(".nav a[href]");
-        if (links.length === 0) return;
-
-        const currentPath = (location.pathname.split("/").pop() || "index.html").toLowerCase();
-
-        links.forEach(link => {
-            link.classList.remove("is-active");
-            const href = link.getAttribute("href");
-            if (!href) return;
-
-            const linkPath = href.split("/").pop().toLowerCase();
-
-            // Simple match or hash match
-            if (linkPath === currentPath || (currentPath === "" && linkPath === "index.html")) {
-                link.classList.add("is-active");
-            }
-        });
-    }
-
-    // =========================================
-    // Initialize All
-    // =========================================
-    function init() {
-        try {
-            initMobileMenu();
-            initHeaderScroll();
-            initProgressBar();
-            initRevealAnimations();
-            initBackToTop();
-            initActiveLink();
-        } catch (e) {
-            console.warn("Stuchi Editora: Some scripts failed to load.", e);
-        }
-    }
-
-    if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", init);
-    } else {
-        init();
-    }
-
+    // marca página atual
+    if (href === path) a.classList.add("is-active");
+  });
 })();
