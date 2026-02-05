@@ -11,11 +11,51 @@
   --card: #0f0f13;
   --line: #1f1f1f;
   --white: #fff;
-  --muted: #b5b5b5;
-  --muted2: #8c8c8c;
+  --text-main: #fff;
+  --text-muted: #b5b5b5;
+  --text-muted2: #8c8c8c;
   --shadow: 0 16px 50px rgba(0, 0, 0, .45);
   --radius: 18px;
+  --nav-bg: rgba(0, 0, 0, .75);
+  --nav-border: rgba(255, 255, 255, .04);
 }
+
+[data-theme="light"] {
+  --bg: #f8f8f8;
+  --bg2: #ffffff;
+  --card: #ffffff;
+  --line: #e5e5e5;
+  --white: #111;
+  --text-main: #111;
+  --text-muted: #555;
+  --text-muted2: #777;
+  --shadow: 0 8px 30px rgba(0, 0, 0, .08);
+  --nav-bg: rgba(255, 255, 255, .85);
+  --nav-border: rgba(0, 0, 0, .05);
+}
+
+/* ========== THEME TOGGLE ========== */
+.theme-toggle {
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--white);
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  width: 40px;
+  height: 40px;
+  margin-left: 12px;
+}
+
+.theme-toggle:hover {
+  background: var(--bg2);
+  transform: rotate(15deg);
+}
+
 
 html {
   scroll-behavior: smooth
@@ -24,8 +64,9 @@ html {
 body {
   font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   background: var(--bg);
-  color: var(--white);
+  color: var(--text-main);
   line-height: 1.6;
+  transition: background 0.4s ease, color 0.4s ease;
 }
 
 img {
@@ -54,7 +95,7 @@ a {
 }
 
 .muted {
-  color: var(--muted2)
+  color: var(--text-muted2)
 }
 
 /* ========== PROGRESS ========== */
@@ -82,9 +123,10 @@ a {
   left: 0;
   width: 100%;
   z-index: 1500;
-  background: rgba(0, 0, 0, .75);
+  background: var(--nav-bg);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(255, 255, 255, .04);
+  border-bottom: 1px solid var(--nav-border);
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .header--scrolled {
@@ -169,7 +211,7 @@ a {
   display: block;
   width: 18px;
   height: 2px;
-  background: #fff;
+  background: var(--white);
   margin: 0 auto;
   position: relative;
   border-radius: 2px;
@@ -182,7 +224,7 @@ a {
   left: 0;
   width: 18px;
   height: 2px;
-  background: #fff;
+  background: var(--white);
   border-radius: 2px;
 }
 
@@ -223,8 +265,8 @@ a {
 }
 
 .btn--solid {
-  background: #fff;
-  color: #000;
+  background: var(--white);
+  color: var(--bg);
 }
 
 .btn--solid:hover {
@@ -233,14 +275,14 @@ a {
 }
 
 .btn--outline {
-  border-color: #fff;
-  color: #fff;
+  border-color: var(--white);
+  color: var(--white);
   background: transparent;
 }
 
 .btn--outline:hover {
-  background: #fff;
-  color: #000
+  background: var(--white);
+  color: var(--bg)
 }
 
 .btn--full {
@@ -249,7 +291,7 @@ a {
 
 /* Link “premium” */
 .link {
-  color: #fff;
+  color: var(--white);
   text-decoration: none;
   font-weight: 600;
   opacity: .92;
@@ -266,6 +308,7 @@ a {
   padding: 0;
   font: inherit;
   cursor: pointer;
+  color: var(--text-muted);
 }
 
 /* ========== HERO ========== */
@@ -285,8 +328,18 @@ a {
     radial-gradient(900px 500px at 20% 20%, rgba(255, 255, 255, .08), transparent 60%),
     radial-gradient(800px 500px at 80% 30%, rgba(255, 255, 255, .06), transparent 60%),
     radial-gradient(700px 500px at 50% 90%, rgba(255, 255, 255, .05), transparent 60%),
-    linear-gradient(180deg, #0b0b0d, #000);
+    linear-gradient(180deg, var(--bg), var(--bg2));
   filter: saturate(1.1);
+  transition: background 0.5s ease;
+}
+
+[data-theme="light"] .hero__bg {
+  background:
+    radial-gradient(900px 500px at 20% 20%, rgba(0, 0, 0, .05), transparent 60%),
+    radial-gradient(800px 500px at 80% 30%, rgba(0, 0, 0, .03), transparent 60%),
+    radial-gradient(700px 500px at 50% 90%, rgba(0, 0, 0, .03), transparent 60%),
+    linear-gradient(180deg, var(--bg), var(--bg2));
+  filter: none;
 }
 
 .hero__grid {
@@ -299,9 +352,9 @@ a {
 
 .pill {
   display: inline-flex;
-  border: 1px solid rgba(255, 255, 255, .12);
-  background: rgba(255, 255, 255, .04);
-  color: #ddd;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--text-muted);
   padding: 8px 12px;
   border-radius: 999px;
   font-size: .85rem;
@@ -469,19 +522,25 @@ a {
 }
 
 .card {
-  border: 1px solid rgba(255, 255, 255, .08);
-  background: rgba(255, 255, 255, .03);
+  border: 1px solid var(--line);
+  background: var(--card);
   border-radius: var(--radius);
   padding: 22px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+[data-theme="light"] .card:hover {
+  box-shadow: var(--shadow);
 }
 
 .card__title {
   font-size: 1.1rem;
-  margin-bottom: 8px
+  margin-bottom: 8px;
+  color: var(--white);
 }
 
 .card__text {
-  color: var(--muted)
+  color: var(--text-muted)
 }
 
 /* CTA */
@@ -493,8 +552,8 @@ a {
 
 .cta__box {
   width: min(820px, 100%);
-  border: 1px solid rgba(255, 255, 255, .10);
-  background: rgba(255, 255, 255, .04);
+  border: 1px solid var(--line);
+  background: var(--card);
   border-radius: var(--radius);
   padding: 22px;
   display: flex;
@@ -504,7 +563,7 @@ a {
 }
 
 .cta__box p {
-  color: var(--muted);
+  color: var(--text-muted);
   margin-top: 4px
 }
 
@@ -516,18 +575,18 @@ a {
 }
 
 .press-item {
-  border: 1px solid rgba(255, 255, 255, .10);
-  background: rgba(255, 255, 255, .03);
+  border: 1px solid var(--line);
+  background: var(--card);
   border-radius: 16px;
   padding: 16px;
   text-align: center;
-  color: var(--muted);
+  color: var(--text-muted);
 }
 
 /* Contact */
 .contact {
-  border: 1px solid rgba(255, 255, 255, .10);
-  background: rgba(255, 255, 255, .04);
+  border: 1px solid var(--line);
+  background: var(--card);
   border-radius: var(--radius);
   padding: 24px;
 }
@@ -545,8 +604,8 @@ a {
 
 .contact__item {
   text-decoration: none;
-  border: 1px solid rgba(255, 255, 255, .10);
-  background: rgba(0, 0, 0, .22);
+  border: 1px solid var(--line);
+  background: var(--bg);
   border-radius: 16px;
   padding: 16px;
   display: flex;
@@ -571,8 +630,8 @@ a {
 /* Footer */
 .footer {
   padding: 26px 0;
-  border-top: 1px solid rgba(255, 255, 255, .06);
-  background: #000;
+  border-top: 1px solid var(--line);
+  background: var(--bg);
 }
 
 .footer__inner {
@@ -625,9 +684,9 @@ a {
   width: 100%;
   padding: 12px;
   border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(0, 0, 0, 0.3);
-  color: #fff;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--white);
   font-family: inherit;
   font-size: 1rem;
   transition: .2s border-color;
@@ -637,8 +696,8 @@ a {
 .form__select:focus,
 .form__textarea:focus {
   outline: none;
-  border-color: rgba(255, 255, 255, 0.3);
-  background: rgba(0, 0, 0, 0.5);
+  border-color: var(--white);
+  background: var(--bg);
 }
 
 .form__textarea {
@@ -666,15 +725,15 @@ a {
   gap: 24px;
   align-items: flex-start;
   padding: 24px;
-  border: 1px solid rgba(255, 255, 255, .10);
-  background: rgba(255, 255, 255, .04);
+  border: 1px solid var(--line);
+  background: var(--card);
   border-radius: 18px;
   transition: .2s ease;
 }
 
 .agenda-item:hover {
-  background: rgba(255, 255, 255, .06);
-  border-color: rgba(255, 255, 255, .20);
+  background: var(--bg2);
+  border-color: var(--muted2);
 }
 
 .agenda-date {
@@ -684,9 +743,9 @@ a {
   justify-content: center;
   min-width: 70px;
   padding: 12px;
-  background: rgba(0, 0, 0, .3);
+  background: var(--bg2);
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, .05);
+  border: 1px solid var(--line);
 }
 
 .agenda-day {
@@ -712,7 +771,8 @@ a {
   display: inline-block;
   font-size: 0.75rem;
   font-weight: 600;
-  background: rgba(255, 255, 255, .15);
+  background: var(--bg);
+  border: 1px solid var(--line);
   padding: 4px 8px;
   border-radius: 6px;
   text-transform: uppercase;
@@ -770,24 +830,24 @@ a {
   font-size: 1.2rem;
   font-family: 'Fraunces', serif;
   letter-spacing: -0.03em;
-  color: var(--white);
+  color: var(--text-muted);
 }
 
 .media-card {
   display: flex;
   flex-direction: column;
   height: 100%;
-  border: 1px solid rgba(255, 255, 255, .08);
-  background: rgba(255, 255, 255, .02);
+  border: 1px solid var(--line);
+  background: var(--card);
   border-radius: 18px;
   padding: 24px;
   transition: .3s ease;
 }
 
 .media-card:hover {
-  background: rgba(255, 255, 255, .05);
+  background: var(--bg2);
   transform: translateY(-4px);
-  border-color: rgba(255, 255, 255, .15);
+  border-color: var(--muted2);
 }
 
 .media-card__head {
@@ -802,7 +862,8 @@ a {
   font-weight: 700;
   color: var(--white);
   padding: 4px 8px;
-  background: rgba(255, 255, 255, .1);
+  background: var(--bg);
+  border: 1px solid var(--line);
   border-radius: 6px;
 }
 
@@ -879,7 +940,7 @@ a {
   justify-content: center;
   color: var(--muted2);
   font-size: 0.9rem;
-  background: linear-gradient(135deg, rgba(255, 255, 255, .05) 0%, rgba(255, 255, 255, .02) 100%);
+  background: linear-gradient(135deg, var(--card) 0%, var(--bg) 100%);
 }
 
 .book-card:hover .book-cover {
