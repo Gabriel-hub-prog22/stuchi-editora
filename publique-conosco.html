@@ -189,9 +189,8 @@
                         <p class="section__subtitle">Conte sobre você e seu projeto.</p>
                     </div>
 
-                    <!-- Formulário com envio via Mailto (Sem Backend do GitHub) -->
-                    <form action="mailto:contatos@stuchieditora.com?subject=Aplica%C3%A7%C3%A3o%20Editorial"
-                        method="GET" enctype="text/plain" class="form">
+                    <!-- Formulário de submissão via API -->
+                    <form id="formPublicacao" class="form">
                         <div class="form__group">
                             <label for="nome" class="form__label">Nome completo</label>
                             <input type="text" id="nome" name="Nome" placeholder="Como gostaria de ser chamado"
@@ -225,17 +224,14 @@
                         </div>
 
                         <div class="form__group">
-                            <label for="sinopse" class="form__label">Pitch do livro (Resumo)</label>
-                            <textarea id="sinopse" name="Pitch do Livro" rows="5"
+                            <label for="pitch" class="form__label">Pitch do livro (Resumo)</label>
+                            <textarea id="pitch" name="Pitch do Livro" rows="5"
                                 placeholder="Do que se trata sua obra? Qual a mensagem principal? (Máx 500 caracteres)"
                                 class="form__textarea" required></textarea>
                         </div>
 
                         <div style="margin-top:24px;">
                             <button type="submit" class="btn btn--solid btn--full">Enviar para análise</button>
-                            <p style="font-size:0.8rem; color:var(--muted); text-align:center; margin-top:12px;">
-                                Ao clicar, seu cliente de e-mail será aberto para o envio.
-                            </p>
                         </div>
                     </form>
                 </div>
@@ -319,6 +315,49 @@
                 outroContainer.style.display = 'none';
                 outroInput.required = false;
                 outroInput.value = '';
+            }
+        });
+
+        document.getElementById("formPublicacao").addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            const nome = document.getElementById("nome").value;
+            const email = document.getElementById("email").value;
+            const genero = document.getElementById("genero").value;
+            const pitch = document.getElementById("pitch").value;
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerText;
+
+            submitBtn.disabled = true;
+            submitBtn.innerText = "Enviando...";
+
+            try {
+                const response = await fetch("https://stuchi-editora.onrender.com/submissions", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        nome,
+                        email,
+                        genero,
+                        pitch
+                    })
+                });
+
+                if (response.ok) {
+                    alert("Projeto enviado com sucesso! Em breve entraremos em contato.");
+                    document.getElementById("formPublicacao").reset();
+                } else {
+                    alert("Erro ao enviar submissão. Tente novamente.");
+                }
+
+            } catch (error) {
+                alert("Erro de conexão com servidor.");
+                console.error(error);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerText = originalText;
             }
         });
     </script>

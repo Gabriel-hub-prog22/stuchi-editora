@@ -9,11 +9,7 @@ async function bootstrap() {
 
     // CORS Configuration
     app.enableCors({
-      origin: [
-        'https://gabriel-hub-prog22.github.io',
-        'http://localhost:5173',
-        'http://localhost:3000',
-      ],
+      origin: '*',
       methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
       credentials: true,
     });

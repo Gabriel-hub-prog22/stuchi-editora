@@ -8,10 +8,11 @@ import { AplicacoesModule } from './modules/aplicacoes/aplicacoes.module';
 import { LivrosModule } from './modules/livros/livros.module';
 import { ImprensaModule } from './modules/imprensa/imprensa.module';
 import { PodcastModule } from './modules/podcast/podcast.module';
+import { SubmissionsModule } from './modules/submissions/submissions.module';
 
 @Module({
-  imports: [AuthModule, UsersModule, PrismaModule, AplicacoesModule, LivrosModule, ImprensaModule, PodcastModule],
+  imports: [AuthModule, UsersModule, PrismaModule, AplicacoesModule, LivrosModule, ImprensaModule, PodcastModule, SubmissionsModule],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
