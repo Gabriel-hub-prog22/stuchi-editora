@@ -1235,39 +1235,3 @@ a {
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
-
-/* ========== VOZES STUCHI ========== */
-.vozes-grid {
-  display: grid;
-  grid-template-columns: 250px 1fr;
-  gap: 32px;
-  align-items: center;
-  max-width: 900px;
-  margin: 32px auto;
-}
-
-.vozes-media img {
-  width: 100%;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  display: block;
-  aspect-ratio: 1/1;
-  object-fit: cover;
-}
-
-.vozes-content {
-  width: 100%;
-}
-
-@media (max-width: 768px) {
-  .vozes-grid {
-    grid-template-columns: 1fr;
-    text-align: center;
-    gap: 24px;
-  }
-
-  .vozes-media {
-    max-width: 200px;
-    margin: 0 auto;
-  }
-}
