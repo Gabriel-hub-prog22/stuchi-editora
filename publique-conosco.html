@@ -371,80 +371,307 @@
     </main>
 
     <script src="assets/js/main.js"></script>
+    <!-- Estilos aprimorados para UX -->
+    <style>
+        .input-error {
+            border-color: #ff4444 !important;
+            box-shadow: 0 0 0 1px #ff4444;
+            animation: shake 0.3s ease-in-out;
+        }
+
+        .error-message {
+            color: #ff4444;
+            font-size: 0.85em;
+            margin-top: 5px;
+            display: block;
+            opacity: 0;
+            animation: slideDown 0.3s forwards;
+        }
+
+        .char-counter {
+            font-size: 0.8em;
+            color: #888;
+            text-align: right;
+            margin-top: 4px;
+            display: block;
+        }
+
+        .char-counter.limit-near {
+            color: #ffab00;
+        }
+
+        .char-counter.limit-reached {
+            color: #ff4444;
+        }
+
+        .form-feedback-box {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .feedback-success {
+            background: rgba(40, 167, 69, 0.1);
+            border: 1px solid rgba(40, 167, 69, 0.3);
+            color: #28a745;
+        }
+
+        .feedback-warning {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            color: #ffc107;
+        }
+
+        .btn-fallback {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 16px;
+            background: #25D366;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .btn-fallback:hover {
+            background: #128C7E;
+            color: white;
+        }
+
+        .btn--loading {
+            opacity: 0.8;
+            cursor: not-allowed !important;
+            position: relative;
+            color: transparent !important;
+        }
+
+        .btn--loading::after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.8s infinite linear;
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-5px);
+            }
+
+            75% {
+                transform: translateX(5px);
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes spin {
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+    </style>
+
     <script>
         document.addEventListener("DOMContentLoaded", function () {
+            // Constantes
+            const WHATSAPP_NUMBER = "5511969569809";
+            const MIN_PITCH_LENGTH = 10;
+            const MAX_PITCH_LENGTH = 500;
+
+            // Elementos do DOM
             const form = document.getElementById("formPublicacao");
+            const submitBtn = form.querySelector('button[type="submit"]');
             const generoSelect = document.getElementById('genero');
             const outroContainer = document.getElementById('outro_container');
             const outroInput = document.getElementById('outro');
-            const submitBtn = form.querySelector('button[type="submit"]');
+            const pitchInput = document.getElementById('pitch');
 
-            // Configuração do WhatsApp
-            const WHATSAPP_NUMBER = "5511969569809";
-
-            // Criar container de feedback dinamicamente
+            // Container de feedback
             const feedbackBox = document.createElement("div");
             feedbackBox.className = "form-feedback-box";
             form.appendChild(feedbackBox);
 
-            // Lógica para mostrar/ocultar campo "Outro" com transição
+            // Contador de Caracteres para o Pitch
+            const charCounter = document.createElement("span");
+            charCounter.className = "char-counter";
+            charCounter.innerText = `0 / ${MAX_PITCH_LENGTH}`;
+            pitchInput.parentNode.appendChild(charCounter);
+
+            // --- Lógica de UI e Interação ---
+
+            // Atualizar contador de caracteres
+            pitchInput.addEventListener("input", function () {
+                const length = this.value.length;
+                charCounter.innerText = `${length} / ${MAX_PITCH_LENGTH}`;
+
+                charCounter.classList.remove("limit-near", "limit-reached");
+                if (length >= MAX_PITCH_LENGTH) {
+                    charCounter.classList.add("limit-reached");
+                } else if (length >= MAX_PITCH_LENGTH * 0.9) {
+                    charCounter.classList.add("limit-near");
+                }
+
+                // Limitar caracteres manualmente se maxlength não funcionar
+                if (length > MAX_PITCH_LENGTH) {
+                    this.value = this.value.substring(0, MAX_PITCH_LENGTH);
+                    charCounter.innerText = `${MAX_PITCH_LENGTH} / ${MAX_PITCH_LENGTH}`;
+                }
+            });
+
+            // Toggle campo "Outro"
             generoSelect.addEventListener('change', function () {
                 const isOutro = this.value === 'Outro';
                 outroContainer.style.display = isOutro ? 'block' : 'none';
                 outroInput.required = isOutro;
-                if (!isOutro) outroInput.value = '';
 
-                if (isOutro) {
+                if (!isOutro) {
+                    outroInput.value = '';
+                    removeError(outroInput);
+                } else {
+                    // Animação suave
                     outroContainer.style.opacity = 0;
                     setTimeout(() => outroContainer.style.opacity = 1, 10);
                     outroContainer.style.transition = "opacity 0.3s ease";
+                    outroInput.focus();
                 }
             });
 
-            // Envio do Formulário
+            // Limpar erros ao digitar
+            form.querySelectorAll("input, textarea, select").forEach(input => {
+                input.addEventListener("input", () => removeError(input));
+                input.addEventListener("change", () => removeError(input));
+            });
+
+            // --- Funções Auxiliares ---
+
+            function showError(input, message) {
+                const parent = input.parentElement;
+                // Evitar duplicar mensagem
+                if (parent.querySelector(".error-message")) return;
+
+                input.classList.add("input-error");
+
+                const msg = document.createElement("span");
+                msg.className = "error-message";
+                msg.innerText = message;
+                parent.appendChild(msg);
+            }
+
+            function removeError(input) {
+                input.classList.remove("input-error");
+                const parent = input.parentElement;
+                const msg = parent.querySelector(".error-message");
+                if (msg) msg.remove();
+            }
+
+            function validateEmail(email) {
+                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+            }
+
+            // --- Handler de Envio ---
+
             form.addEventListener("submit", function (e) {
                 e.preventDefault();
 
-                // Limpar estados anteriores
+                // 1. Resetar UI
                 feedbackBox.style.display = "none";
+                feedbackBox.innerHTML = "";
                 feedbackBox.className = "form-feedback-box";
+                document.querySelectorAll(".error-message").forEach(el => el.remove());
                 document.querySelectorAll(".input-error").forEach(el => el.classList.remove("input-error"));
 
-                // Validação Visual
-                let isValid = true;
-                const requiredInputs = form.querySelectorAll("[required]");
+                // 2. Validação
+                let hasError = false;
+                let firstErrorInput = null;
 
-                requiredInputs.forEach(input => {
+                // Validar Campos Obrigatórios Gerais
+                const inputs = form.querySelectorAll("[required]");
+                inputs.forEach(input => {
                     if (!input.value.trim()) {
-                        isValid = false;
-                        input.classList.add("input-error");
+                        showError(input, "Este campo é obrigatório.");
+                        hasError = true;
+                        if (!firstErrorInput) firstErrorInput = input;
                     }
                 });
 
-                if (!isValid) {
-                    feedbackBox.textContent = "Preencha todos os campos obrigatórios antes de enviar.";
-                    feedbackBox.classList.add("feedback-error");
-                    feedbackBox.style.display = "block";
+                // Validar Email
+                const emailInput = document.getElementById("email");
+                if (emailInput.value.trim() && !validateEmail(emailInput.value)) {
+                    showError(emailInput, "Por favor, insira um e-mail válido.");
+                    hasError = true;
+                    if (!firstErrorInput) firstErrorInput = emailInput;
+                }
+
+                // Validar Pitch (Mínimo caracteres)
+                if (pitchInput.value.trim().length < MIN_PITCH_LENGTH) {
+                    showError(pitchInput, `Descreva um pouco mais (mínimo ${MIN_PITCH_LENGTH} caracteres).`);
+                    hasError = true;
+                    if (!firstErrorInput) firstErrorInput = pitchInput;
+                }
+
+                // Se houver erro, parar e focar
+                if (hasError) {
+                    if (firstErrorInput) {
+                        firstErrorInput.focus();
+                        firstErrorInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
                     return;
                 }
 
-                // Estado de Loading
+                // 3. Preparação para Envio
                 const originalText = submitBtn.innerText;
                 submitBtn.classList.add("btn--loading");
                 submitBtn.innerText = "Abrindo WhatsApp...";
                 submitBtn.disabled = true;
 
                 // Coletar Dados
-                const nome = document.getElementById("nome").value;
-                const email = document.getElementById("email").value;
+                const nome = document.getElementById("nome").value.trim();
+                const email = document.getElementById("email").value.trim();
                 let genero = document.getElementById("genero").value;
-                const pitch = document.getElementById("pitch").value;
+                const pitch = document.getElementById("pitch").value.trim();
 
                 if (genero === 'Outro') {
-                    genero = outroInput.value;
+                    genero = outroInput.value.trim();
                 }
 
-                // Montar mensagem formatada
+                // Formatando Mensagem
                 const message = `Nova submissão editorial
 
 Nome: ${nome}
@@ -455,41 +682,58 @@ ${pitch}`;
 
                 const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 
-                // Simular delay de processamento para UX (1.5s)
+                // 4. Abertura do WhatsApp com Delay (UX)
                 setTimeout(() => {
-                    // Abrir WhatsApp em nova aba
-                    const newWindow = window.open(whatsappUrl, '_blank');
+                    let windowOpened = false;
 
-                    // Fallback se popup for bloqueado
-                    if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
-                        window.location.href = whatsappUrl;
+                    try {
+                        const newWindow = window.open(whatsappUrl, '_blank');
+                        if (newWindow && !newWindow.closed && typeof newWindow.closed !== 'undefined') {
+                            windowOpened = true;
+                        }
+                    } catch (err) {
+                        console.error("Erro ao abrir popup:", err);
                     }
 
-                    // Feedback de Sucesso
                     submitBtn.classList.remove("btn--loading");
-                    submitBtn.innerText = "Verifique o WhatsApp";
+                    submitBtn.innerText = "Enviado!";
 
-                    feedbackBox.innerHTML = "<strong>Seu WhatsApp foi aberto com os dados.</strong><br>Basta clicar em enviar na conversa.";
-                    feedbackBox.classList.add("feedback-success");
+                    // 5. Feedback Inteligente
+                    if (windowOpened) {
+                        // Sucesso Automático
+                        feedbackBox.innerHTML = `
+                            <strong>Seu aplicativo de WhatsApp foi aberto.</strong><br>
+                            Finalize o envio da mensagem para concluir sua submissão.
+                        `;
+                        feedbackBox.classList.add("feedback-success");
+                    } else {
+                        // Popup Bloqueado - Fallback Manual
+                        feedbackBox.innerHTML = `
+                            <strong>O popup foi bloqueado.</strong><br>
+                            Clique abaixo para abrir o WhatsApp manualmente:<br>
+                            <a href="${whatsappUrl}" target="_blank" class="btn-fallback">Abrir WhatsApp Manualmente</a>
+                        `;
+                        feedbackBox.classList.add("feedback-warning");
+                    }
+
                     feedbackBox.style.display = "block";
+                    feedbackBox.scrollIntoView({ behavior: "smooth", block: "center" });
 
-                    // Resetar formulário e botão após alguns segundos
-                    setTimeout(() => {
+                    // Resetar formulário após sucesso (mas manter feedback visível por um tempo)
+                    if (windowOpened) {
+                        setTimeout(() => {
+                            form.reset();
+                            charCounter.innerText = `0 / ${MAX_PITCH_LENGTH}`;
+                            submitBtn.disabled = false;
+                            submitBtn.innerText = originalText;
+                        }, 5000);
+                    } else {
+                        // Se houve fallback, reabilitar botão mais rápido
                         submitBtn.disabled = false;
                         submitBtn.innerText = originalText;
-                        form.reset();
-                    }, 8000);
-
-                }, 1500);
-            });
-
-            // Remover erro ao digitar
-            form.querySelectorAll("input, textarea, select").forEach(input => {
-                input.addEventListener("input", function () {
-                    if (this.classList.contains("input-error")) {
-                        this.classList.remove("input-error");
                     }
-                });
+
+                }, 1500); // 1.5s delay
             });
         });
     </script>
